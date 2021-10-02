@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="Test.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:t="using:Test.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <RelativePanel>
+
+            <TextBlock Name="AlbumName" 
+                       RelativePanel.AlignLeftWithPanel="True"
+                       Height="50" Text="Enter the Album Name" TextWrapping="Wrap" Width="150" />
+            <TextBox Name="InputAlbumName" 
+                     RelativePanel.RightOf="AlbumName"
+                     Height="50" Text="{Binding Name, Mode = TwoWay, UpdateSourceTrigger = PropertyChanged}" TextWrapping="Wrap" Width="300"/>
+            <TextBlock Name="Description" 
+                     RelativePanel.RightOf="InputAlbumName"
+                     Height="50" Text="Enter the Description" TextWrapping="Wrap" Width="300"/>
+            <TextBox Name="InputDescription" 
+                     RelativePanel.RightOf="Description"
+                     Height="50"  Width="300"/>
+            
+            <Button x:Name="CreateAlbum" 
+                    RelativePanel.RightOf="InputDescription"
+                    Content="Create Album" Height="100" Width="100"
+                    Click="CreateAlbum_Click"
+                    />
+            <Button x:Name="AddToAlbum" 
+                    RelativePanel.RightOf="CreateAlbum"
+                    Content="Add to Album" Height="100" Width="100"
+                    Click="AddToAlbum_Click"
+                    />
+            
+            
+            
+        </RelativePanel>
+
+        <SplitView Grid.Row="1"
+                   Name ="MySplitView"
+                   DisplayMode="Overlay">
+            <SplitView.Pane>
+                <TextBlock Text="Welcome User" FontSize="18" Margin="10,10,0,0"></TextBlock>
+            </SplitView.Pane>
+            
+            <SplitView.Content>
+                <Grid Margin="20,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="All Photos" FontSize="24"/>
+                    <GridView Grid.Row="1" 
+                              Name="PhotoGridView"
+                              IsItemClickEnabled="True"
+                              ItemsSource="{x:Bind Photos}"
+                              ItemClick="PhotoGridView_ItemClick">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="t:Photo">
+                                <Image Name ="MyImage" Height="200" Width="200" Source="{x:Bind PhotoPath}"/>
+
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+
+                </Grid>
+            </SplitView.Content>
+        </SplitView>        
+              
+    </Grid>
+</Page>
